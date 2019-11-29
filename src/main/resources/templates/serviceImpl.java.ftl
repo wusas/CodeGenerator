@@ -3,7 +3,7 @@
  */
 package ${package.ServiceImpl};
 
-import ${cfg.parentPackage}.framework.common.BaseInterfaceService;
+import ${cfg.parentPackage}.core.common.BaseInterfaceService;
 import ${package.Entity}.${entity};
 import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};

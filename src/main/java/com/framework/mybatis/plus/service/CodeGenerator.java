@@ -47,7 +47,7 @@ public class CodeGenerator {
         gc.setEnableCache(false);// XML 二级缓存
         gc.setBaseResultMap(true);// XML ResultMap
         gc.setBaseColumnList(true);// XML columList
-        gc.setEntityName("%sEntity");
+//        gc.setEntityName("%sEntity");
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
