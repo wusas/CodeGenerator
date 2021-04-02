@@ -5,6 +5,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 @ConfigurationProperties(prefix = "cdgenerator")
 @Data
 public class CdGeneratorConfiguration {
@@ -33,7 +35,7 @@ public class CdGeneratorConfiguration {
     public String[] getTabs(){
         Assert.hasLength(tables,"需要配置tables参数...");
 
-        if("All".equals(tables.toUpperCase())){
+        if("ALL".equals(tables.toUpperCase())){
             return null;
         }else if(tables.contains(",")){
             return tables.split(",");

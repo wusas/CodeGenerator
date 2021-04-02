@@ -88,7 +88,7 @@ public class GeneratorUtil {
 
                     switch (type) {
                         case StringPool.DOT_JAVA:
-                            outputFileString= getOutputFileString(name,moduleName,tableInfo);
+                            outputFileString= getOutputFileString(name, moduleName,tableInfo);
                             break;
                         case StringPool.DOT_XML:
                             outputFileString= config.getCdGeneratorConfiguration().getOutputDir()+"/"+config.getModuleName() + "/src/main/resources/"

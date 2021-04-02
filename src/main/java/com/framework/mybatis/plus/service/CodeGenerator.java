@@ -3,20 +3,18 @@
  */
 package com.framework.mybatis.plus.service;
 
-import com.baomidou.mybatisplus.annotation.DbType;
-import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import com.framework.mybatis.plus.config.CdConfiguration;
 import com.framework.mybatis.plus.config.CodeGeneratorPlusConfig;
 import com.framework.mybatis.plus.config.SystemConstants;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 /**
@@ -33,8 +31,7 @@ public class CodeGenerator {
     private static CodeGeneratorPlusConfig config = generatorUtil.config;
 
 
-    public static void executeCodeGenerator() {
-        generatorUtil.inputCodeGenerator();
+    private static void executeCodeGenerator() {
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -103,5 +100,69 @@ public class CodeGenerator {
         // 切换为 freemarker 模板引擎
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
+    }
+
+
+    public static void execute(){
+        Connection conn=null;
+        try {
+            generatorUtil.inputCodeGenerator();
+
+            if("ALL".equals(config.getCdGeneratorConfiguration().getTables().toUpperCase())){
+                conn=generatorUtil.getDataSource().getConn();
+                Map<String,String> map=new HashMap<>();
+
+                //创建一个Statement对象
+                Statement stmt = conn.createStatement();
+                //检索数据
+                StringBuffer sql=new StringBuffer("SELECT * from ( ");
+                sql.append("SELECT DISTINCT ");
+                sql.append("SUBSTRING_INDEX(table_name,'_',1) AS table_prefix ");
+                sql.append("FROM mysql.`innodb_table_stats` ");
+                sql.append("WHERE database_name='"+conn.getCatalog()+"' ");
+                sql.append(") t where t.table_prefix!='sys' ");
+                ResultSet rs = stmt.executeQuery(sql.toString());
+                while(rs.next()) {
+                    String tablePrefix=rs.getString(1);
+//                    String moduleName=config.getModuleName()+"-"+tablePrefix;
+                    String moduleName=tablePrefix;
+
+                    StringBuffer sqlstr=new StringBuffer("SELECT table_name ");
+                    sqlstr.append("FROM mysql.`innodb_table_stats` ");
+                    sqlstr.append("WHERE database_name='"+conn.getCatalog()+"' ");
+                    sqlstr.append(" and table_name like '"+tablePrefix+"%' ");
+
+                    StringBuffer tableName=new StringBuffer();
+
+                    Statement statement=conn.createStatement();
+                    ResultSet rset = statement.executeQuery(sqlstr.toString());
+                    while(rset.next()) {
+                        tableName.append(rset.getString(1)+",");
+                    }
+
+                    String tableNameStr=tableName.deleteCharAt(tableName.length()-1).toString();
+
+                    map.put(moduleName,tableNameStr);
+                }
+
+                for(String key:map.keySet()){
+                    config.setModuleName(key);
+                    config.getCdGeneratorConfiguration().setTables(map.get(key));
+                    executeCodeGenerator();
+                }
+
+            }else{
+                executeCodeGenerator();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if(null!=conn)  conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }
