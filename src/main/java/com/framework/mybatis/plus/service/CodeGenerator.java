@@ -103,7 +103,7 @@ public class CodeGenerator {
     }
 
 
-    public static void execute(){
+    public static List<String> execute(){
         Connection conn=null;
         try {
             generatorUtil.inputCodeGenerator();
@@ -111,6 +111,7 @@ public class CodeGenerator {
             if("ALL".equals(config.getCdGeneratorConfiguration().getTables().toUpperCase())){
                 conn=generatorUtil.getDataSource().getConn();
                 Map<String,String> map=new HashMap<>();
+                List<String> moduleNameList=new ArrayList<>();
 
                 //创建一个Statement对象
                 Statement stmt = conn.createStatement();
@@ -126,6 +127,7 @@ public class CodeGenerator {
                     String tablePrefix=rs.getString(1);
 //                    String moduleName=config.getModuleName()+"-"+tablePrefix;
                     String moduleName=tablePrefix;
+                    moduleNameList.add(moduleName);
 
                     StringBuffer sqlstr=new StringBuffer("SELECT table_name ");
                     sqlstr.append("FROM mysql.`innodb_table_stats` ");
@@ -151,6 +153,8 @@ public class CodeGenerator {
                     executeCodeGenerator();
                 }
 
+                return moduleNameList;
+
             }else{
                 executeCodeGenerator();
             }
@@ -163,6 +167,6 @@ public class CodeGenerator {
                 e.printStackTrace();
             }
         }
-
+        return null;
     }
 }
