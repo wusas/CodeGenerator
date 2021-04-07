@@ -17,7 +17,7 @@ import java.util.Map;
 public class CodeGeneratorPlusMain{
 
     public static void main(String[] args) {
-        CodeGenerator.execute();
+        CodeGenerator.execute(null);
     }
 
 }

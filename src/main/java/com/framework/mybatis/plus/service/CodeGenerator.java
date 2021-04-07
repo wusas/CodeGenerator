@@ -31,7 +31,7 @@ public class CodeGenerator {
     private static CodeGeneratorPlusConfig config = generatorUtil.config;
 
 
-    private static void executeCodeGenerator() {
+    private static void executeCodeGenerator(String prjName) {
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -69,7 +69,7 @@ public class CodeGenerator {
             }
         };
         // 自定义输出配置
-        cfg.setFileOutConfigList(generatorUtil.outputTemplatesFileConfig(pc.getModuleName()));
+        cfg.setFileOutConfigList(generatorUtil.outputTemplatesFileConfig(prjName));
 
         mpg.setCfg(cfg);
 
@@ -103,10 +103,10 @@ public class CodeGenerator {
     }
 
 
-    public static List<String> execute(){
+    public static List<String> execute(String prjName){
         Connection conn=null;
         try {
-            generatorUtil.inputCodeGenerator();
+            generatorUtil.inputCodeGenerator(prjName);
 
             if("ALL".equals(config.getCdGeneratorConfiguration().getTables().toUpperCase())){
                 conn=generatorUtil.getDataSource().getConn();
@@ -150,13 +150,12 @@ public class CodeGenerator {
                 for(String key:map.keySet()){
                     config.setModuleName(key);
                     config.getCdGeneratorConfiguration().setTables(map.get(key));
-                    executeCodeGenerator();
+                    executeCodeGenerator(prjName);
                 }
 
                 return moduleNameList;
-
             }else{
-                executeCodeGenerator();
+                executeCodeGenerator(prjName);
             }
         }catch (Exception e){
             e.printStackTrace();

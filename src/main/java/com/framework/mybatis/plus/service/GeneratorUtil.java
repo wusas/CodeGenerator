@@ -49,8 +49,8 @@ public class GeneratorUtil {
      * @param tableInfo
      * @return
      */
-    private String getOutputFileString(String name,String moduleName,TableInfo tableInfo){
-        String outputFileString = config.getCdGeneratorConfiguration().getOutputDir() +"/"+config.getModuleName()+ "/src/main/java/" + config.getCdGeneratorConfiguration().getParentPackagePath() + "/" + moduleName;
+    private String getOutputFileString(String name,String prjName,TableInfo tableInfo){
+        String outputFileString = config.getCdGeneratorConfiguration().getOutputDir() +"/"+prjName+"-"+config.getModuleName()+ "/src/main/java/" + config.getCdGeneratorConfiguration().getParentPackagePath() + "/" + config.getModuleName();
         switch (name) {
             case "mapper":
                 outputFileString += "/mapper/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_JAVA;
@@ -74,7 +74,7 @@ public class GeneratorUtil {
      *
      * @return
      */
-    public List<FileOutConfig> outputTemplatesFileConfig(String moduleName) {
+    public List<FileOutConfig> outputTemplatesFileConfig(String prjName) {
         List<FileOutConfig> focList = new ArrayList<>();
 
         for (GeneratorUtil.TEMP temp:GeneratorUtil.TEMP.values()) {
@@ -88,12 +88,12 @@ public class GeneratorUtil {
 
                     switch (type) {
                         case StringPool.DOT_JAVA:
-                            outputFileString= getOutputFileString(name, moduleName,tableInfo);
+                            outputFileString= getOutputFileString(name, prjName,tableInfo);
                             break;
                         case StringPool.DOT_XML:
-                            outputFileString= config.getCdGeneratorConfiguration().getOutputDir()+"/"+config.getModuleName() + "/src/main/resources/"
+                            outputFileString= config.getCdGeneratorConfiguration().getOutputDir()+"/"+prjName+"-"+config.getModuleName() + "/src/main/resources/"
                                     + config.getCdGeneratorConfiguration().getParentPackagePath()
-                                    + "/" + moduleName + "/mapper/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+                                    + "/" + config.getModuleName() + "/mapper/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
                     }
                     return outputFileString;
                 }
@@ -151,8 +151,11 @@ public class GeneratorUtil {
     /**
      * 代码生成前的输入项
      */
-    public void inputCodeGenerator() {
-        config.setModuleName(scanner("模块名（groupId）"));
+    public void inputCodeGenerator(String prjName) {
+        if(StringUtils.isEmpty(prjName))
+            config.setModuleName(scanner("模块名（groupId）"));
+        else
+            config.setModuleName(prjName);
     }
 
     /**
