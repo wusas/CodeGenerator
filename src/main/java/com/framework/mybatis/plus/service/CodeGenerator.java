@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.framework.mybatis.plus.config.CodeGeneratorPlusConfig;
 import com.framework.mybatis.plus.config.SystemConstants;
+import org.springframework.util.StringUtils;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -35,9 +36,20 @@ public class CodeGenerator {
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
-        // 全局配置
+        StringBuffer outDir=new StringBuffer(config.getCdGeneratorConfiguration().getOutputDir());
+        outDir.append("/");
+        if(StringUtils.hasLength(prjName)){
+            outDir.append(prjName).append("-");
+            prjName=prjName+"-";
+        }
+        else
+            prjName="";
+
+        outDir.append(config.getModuleName()).append("/src/main/java");
+
+            // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir(config.getCdGeneratorConfiguration().getOutputDir()+"/"+config.getModuleName()+"/src/main/java");
+        gc.setOutputDir(outDir.toString());
         gc.setAuthor(config.getCdGeneratorConfiguration().getAuthor());
         gc.setOpen(false);
         gc.setFileOverride(true);

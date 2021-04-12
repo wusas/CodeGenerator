@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.generator.config.ConstVal;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
@@ -50,10 +51,10 @@ public class GeneratorUtil {
      * @return
      */
     private String getOutputFileString(String name,String prjName,TableInfo tableInfo){
-        String outputFileString = config.getCdGeneratorConfiguration().getOutputDir() +"/"+prjName+"-"+config.getModuleName()+ "/src/main/java/" + config.getCdGeneratorConfiguration().getParentPackagePath() + "/" + config.getModuleName();
+        String outputFileString = config.getCdGeneratorConfiguration().getOutputDir() +"/"+prjName+config.getModuleName()+ "/src/main/java/" + config.getCdGeneratorConfiguration().getParentPackagePath() + "/" + config.getModuleName();
         switch (name) {
             case "mapper":
-                outputFileString += "/mapper/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_JAVA;
+                outputFileString += "/mapper/" + tableInfo.getEntityName() + ConstVal.MAPPER + StringPool.DOT_JAVA;
                 break;
             case "controller":
                 outputFileString += "/controller/" + tableInfo.getEntityName() + "Controller" + StringPool.DOT_JAVA;
@@ -91,7 +92,7 @@ public class GeneratorUtil {
                             outputFileString= getOutputFileString(name, prjName,tableInfo);
                             break;
                         case StringPool.DOT_XML:
-                            outputFileString= config.getCdGeneratorConfiguration().getOutputDir()+"/"+prjName+"-"+config.getModuleName() + "/src/main/resources/"
+                            outputFileString= config.getCdGeneratorConfiguration().getOutputDir()+"/"+prjName+config.getModuleName() + "/src/main/resources/"
                                     + config.getCdGeneratorConfiguration().getParentPackagePath()
                                     + "/" + config.getModuleName() + "/mapper/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
                     }

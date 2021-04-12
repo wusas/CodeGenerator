@@ -29,4 +29,4 @@ cdgenerator:
   skip-view: true
   copyright: Fih
   #表名称配置，多个用逗号隔开，若全部则为All。注意不同数据库大小写敏感
-  tables: All
+  tables: his_appointment_source
