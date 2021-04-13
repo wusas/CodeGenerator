@@ -1,32 +1,32 @@
-server:
-  port: 8085
-
-spring:
-  application:
-    name: cdgenerator-spring-boot-starter
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.96.75.125:3306/pss?serverTimeZone=Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
-    username: root
-    password: Fih147wd!@#
-#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-#    url: jdbc:sqlserver://192.168.166.103:1433;database=appstore
-#    username: sa
-#    password: Fih123456
-
-logging:
-  config: classpath:logback-spring.xml
-  path: logs/
-
-cdgenerator:
-  #文件生成默认作者
-  author: xiaolong.song
-  #文件输出路径
-  output-dir: /Users/songxiaolong/work/test
-  #父级包名
-  parent-package: com.fih
-  #是否略过视图
-  skip-view: true
-  copyright: Fih
-  #表名称配置，多个用逗号隔开，若全部则为All。注意不同数据库大小写敏感
-  tables: his_appointment_source
+#server:
+#  port: 8085
+#
+#spring:
+#  application:
+#    name: cdgenerator-spring-boot-starter
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://47.96.75.125:3306/pss?serverTimeZone=Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
+#    username: root
+#    password: Fih147wd!@#
+##    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+##    url: jdbc:sqlserver://192.168.166.103:1433;database=appstore
+##    username: sa
+##    password: Fih123456
+#
+#logging:
+#  config: classpath:logback-spring.xml
+#  path: logs/
+#
+#cdgenerator:
+#  #文件生成默认作者
+#  author: xiaolong.song
+#  #文件输出路径
+#  output-dir: /Users/songxiaolong/work/test
+#  #父级包名
+#  parent-package: com.fih
+#  #是否略过视图
+#  skip-view: true
+#  copyright: Fih
+#  #表名称配置，多个用逗号隔开，若全部则为All。注意不同数据库大小写敏感
+#  tables: his_appointment_source
