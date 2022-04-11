@@ -17,10 +17,13 @@ import java.util.Scanner;
 
 public class GeneratorUtil {
 
-    public CodeGeneratorPlusConfig config=CdConfiguration.getInstance().getGeneratorPlusConfig();
+    public CodeGeneratorPlusConfig config = CdConfiguration.getInstance().getGeneratorPlusConfig();
 
-    enum TEMP{
+    enum TEMP {
 
+        /**
+         * 模板枚举
+         */
         xml("/templates/mapper.xml.ftl"),
 
         mapper("/templates/mapper.java.ftl"),
@@ -33,8 +36,8 @@ public class GeneratorUtil {
 
         private String value;
 
-        TEMP(String value){
-            this.value=value;
+        TEMP(String value) {
+            this.value = value;
         }
 
         public String getVal() {
@@ -45,25 +48,35 @@ public class GeneratorUtil {
     /**
      * 获取输入路径和文件
      *
-     * @param name  输出文件类型：mapper、controller、service、serviceImpl、mapperXml
+     * @param name       输出文件类型：mapper、controller、service、serviceImpl、mapperXml
      * @param moduleName
      * @param tableInfo
      * @return
      */
-    private String getOutputFileString(String name,String prjName,TableInfo tableInfo){
-        String outputFileString = config.getCdGeneratorConfiguration().getOutputDir() +"/"+prjName+config.getModuleName()+ "/src/main/java/" + config.getCdGeneratorConfiguration().getParentPackagePath() + "/" + config.getModuleName();
+    private String getOutputFileString(String name, String prjName, TableInfo tableInfo) {
+        String outputFileString = null;
         switch (name) {
             case "mapper":
+                outputFileString =  StringUtils.isEmpty(config.getCdGeneratorConfiguration().getMapperPackage()) ?  config.getCdGeneratorConfiguration().getOutputDir() :
+                config.getCdGeneratorConfiguration().getMapperPackage() + "/" + prjName + "/src/main/java";
                 outputFileString += "/mapper/" + tableInfo.getEntityName() + ConstVal.MAPPER + StringPool.DOT_JAVA;
                 break;
             case "controller":
+                outputFileString =  StringUtils.isEmpty(config.getCdGeneratorConfiguration().getControllerPackage()) ?  config.getCdGeneratorConfiguration().getOutputDir() :
+                        config.getCdGeneratorConfiguration().getControllerPackage() + "/" + prjName + "/src/main/java";
                 outputFileString += "/controller/" + tableInfo.getEntityName() + "Controller" + StringPool.DOT_JAVA;
                 break;
             case "service":
+                outputFileString =  StringUtils.isEmpty(config.getCdGeneratorConfiguration().getServerPackage()) ?  config.getCdGeneratorConfiguration().getOutputDir() :
+                        config.getCdGeneratorConfiguration().getServerPackage() + "/" + prjName + "/src/main/java";
                 outputFileString += "/service/I" + tableInfo.getEntityName() + "Service" + StringPool.DOT_JAVA;
                 break;
             case "serviceImpl":
+                outputFileString =  StringUtils.isEmpty(config.getCdGeneratorConfiguration().getServerPackage()) ?  config.getCdGeneratorConfiguration().getOutputDir() :
+                        config.getCdGeneratorConfiguration().getServerPackage() + "/" + prjName + "/src/main/java";
                 outputFileString += "/service/impl/" + tableInfo.getEntityName() + "ServiceImpl" + StringPool.DOT_JAVA;
+                break;
+            default:
                 break;
         }
 
@@ -78,23 +91,24 @@ public class GeneratorUtil {
     public List<FileOutConfig> outputTemplatesFileConfig(String prjName) {
         List<FileOutConfig> focList = new ArrayList<>();
 
-        for (GeneratorUtil.TEMP temp:GeneratorUtil.TEMP.values()) {
+        for (GeneratorUtil.TEMP temp : GeneratorUtil.TEMP.values()) {
             focList.add(new FileOutConfig(temp.getVal()) {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
                     String type = temp.getVal().substring(temp.getVal().indexOf("."), temp.getVal().lastIndexOf("."));
                     String name = temp.getVal().substring(temp.getVal().lastIndexOf("/") + 1, temp.getVal().indexOf("."));
-
-                    String outputFileString="";
-
+                    String outputFileString = StringUtils.isEmpty(config.getCdGeneratorConfiguration().getMapperPackage()) ?
+                            config.getCdGeneratorConfiguration().getOutputDir() : config.getCdGeneratorConfiguration().getMapperPackage();
                     switch (type) {
                         case StringPool.DOT_JAVA:
-                            outputFileString= getOutputFileString(name, prjName,tableInfo);
+                            outputFileString = getOutputFileString(name, prjName, tableInfo);
                             break;
                         case StringPool.DOT_XML:
-                            outputFileString= config.getCdGeneratorConfiguration().getOutputDir()+"/"+prjName+config.getModuleName() + "/src/main/resources/"
+                            outputFileString = outputFileString + "/" + prjName + config.getModuleName() + "/src/main/resources/"
                                     + config.getCdGeneratorConfiguration().getParentPackagePath()
-                                    + "/" + config.getModuleName() + "/mapper/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+                                    + "/mapper/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+                        default:
+                            break;
                     }
                     return outputFileString;
                 }
@@ -105,13 +119,12 @@ public class GeneratorUtil {
     }
 
 
-
     /**
      * 数据源配置
      *
      * @return
      */
-    public DataSourceConfig getDataSource(){
+    public DataSourceConfig getDataSource() {
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setUrl(config.getUrl());
         // dsc.setSchemaName("public");
@@ -124,26 +137,23 @@ public class GeneratorUtil {
     }
 
 
-
     /**
      * 判断数据库类型
      *
      * @return 类型枚举值
      */
     public DbType getDbType(String driverName) {
-        DbType dbType=null;
-        if (null == dbType) {
-            if (driverName.contains("mysql")) {
-                dbType = DbType.MYSQL;
-            } else if (driverName.contains("oracle")) {
-                dbType = DbType.ORACLE;
-            } else if (driverName.contains("postgresql")) {
-                dbType = DbType.POSTGRE_SQL;
-            } else if(driverName.contains("sqlserver")){
-                dbType=DbType.SQL_SERVER;
-            } else {
-                throw new MybatisPlusException("Unknown type of database!");
-            }
+        DbType dbType = null;
+        if (driverName.contains("mysql")) {
+            dbType = DbType.MYSQL;
+        } else if (driverName.contains("oracle")) {
+            dbType = DbType.ORACLE;
+        } else if (driverName.contains("postgresql")) {
+            dbType = DbType.POSTGRE_SQL;
+        } else if (driverName.contains("sqlserver")) {
+            dbType = DbType.SQL_SERVER;
+        } else {
+            throw new MybatisPlusException("Unknown type of database!");
         }
         return dbType;
     }
@@ -153,10 +163,11 @@ public class GeneratorUtil {
      * 代码生成前的输入项
      */
     public void inputCodeGenerator(String prjName) {
-        if(StringUtils.isEmpty(prjName))
+        if (StringUtils.isEmpty(prjName)) {
             config.setModuleName(scanner("模块名（groupId）"));
-        else
+        } else {
             config.setModuleName(prjName);
+        }
     }
 
     /**

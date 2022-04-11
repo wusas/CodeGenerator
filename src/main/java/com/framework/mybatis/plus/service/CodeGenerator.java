@@ -19,11 +19,11 @@ import java.sql.Statement;
 import java.util.*;
 
 /**
- * @author xiaolong.song
+ * @author wu.sha
  * @Package com.framework.mybatis.plus
  * @Description: 代码生成器
- * @email loye.song@foxmail.com
- * @date 2019/2/12 11:19
+ * @email wusha@meibangtech.com
+ * @date 
  */
 public class CodeGenerator {
 

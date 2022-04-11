@@ -13,15 +13,32 @@ public class CdGeneratorConfiguration {
 
     private String parentPackage = "com";
 
-    private String author = "xiaolong.song";
+    private String controllerPackage = "com";
+
+    private String serverPackage = "com";
+
+    private String mapperPackage = "com";
+
+    private String entityPackage = "com";
+
+    private String author = "wu.sha";
 
     private String outputDir = System.getProperty("user.dir");
 
-    private Boolean skipView = false;//是否略过视图
+    /**
+     * 是否略过视图
+     */
+    private Boolean skipView = false;
 
-    private String tables;//需要生成的表，多个用逗号隔开。
+    /**
+     * 需要生成的表，多个用逗号隔开
+     */
+    private String tables;
 
-    private String copyright="";//代码生成版权
+    /**
+     * 代码生成版权
+     */
+    private String copyright="";
 
     public String getParentPackagePath(){
         if(StringUtils.hasLength(parentPackage)){

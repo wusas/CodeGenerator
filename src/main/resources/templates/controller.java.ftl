@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 <#if restControllerStyle>
 import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
 <#else>
 import org.springframework.stereotype.Controller;
 </#if>
@@ -25,6 +26,7 @@ import ${superControllerClassPackage};
  */
 <#if restControllerStyle>
 @RestController
+@RequiredArgsConstructor
 <#else>
 @Controller
 </#if>

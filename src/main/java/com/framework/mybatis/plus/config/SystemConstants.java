@@ -4,20 +4,42 @@ package com.framework.mybatis.plus.config;
  * 代码代码生成器要配置的参数 cdgenerator 下的配置属性
  */
 public enum  SystemConstants {
+    /**
+     * 代码生成器配置parent key
+     */
+    CD_GENERATOR("cdgenerator"),
+    /**
+     * 生成代码父类包名
+     */
+    PARENT_PACKAGE("parent-package"),
 
-    CD_GENERATOR("cdgenerator"),//代码生成器配置parent key
+    CONTROLLER_PACKAGE("controller-package"),
 
-    PARENT_PACKAGE("parent-package"),//生成代码父类包名
+    SERVER_PACKAGE("server-package"),
 
-    AUTHOR("author"),//代码生成作者
+    MAPPER_PACKAGE("mapper-package"),
 
-    OUTPUT_DIR("output-dir"),//代码输出地址
-
-    SHIP_VIEW("skip-view"),//是否跳过视图
-
-    COPYRIGHT("copyright"),//代码版权
-
-    TABLES("tables");//需要生成的表
+    ENTITY_PACKAGE("entity-package"),
+    /**
+     * 代码生成作者
+     */
+    AUTHOR("author"),
+    /**
+     * 代码输出地址
+     */
+    OUTPUT_DIR("output-dir"),
+    /**
+     * 是否跳过视图
+     */
+    SHIP_VIEW("skip-view"),
+    /**
+     * 代码版权
+     */
+    COPYRIGHT("copyright"),
+    /**
+     * 需要生成的表
+     */
+    TABLES("tables");
 
     private String val;
 

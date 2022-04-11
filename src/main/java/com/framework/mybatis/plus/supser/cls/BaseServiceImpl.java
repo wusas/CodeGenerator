@@ -15,11 +15,10 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * @author xiaolong.song
+ * @author wu.sha
  * @Package com.framework.mybatis.plus
  * @Description: 顶级 Service 用来替换 mybatis-plus IService接口
- * @email loye.song@foxmail.com
- * @date 2019/2/19 17:16
+ * @email wusha@meibangtech.com
  */
 public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements BaseIService<T> {
 

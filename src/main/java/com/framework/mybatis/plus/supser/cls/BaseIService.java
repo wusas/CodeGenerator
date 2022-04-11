@@ -12,11 +12,8 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * @author xiaolong.song
+ * @author wusha
  * @Package com.framework.mybatis.plus
- * @Description:
- * @email loye.song@foxmail.com
- * @date 2019/2/19 17:47
  */
 public interface BaseIService<T> extends IService<T> {
 

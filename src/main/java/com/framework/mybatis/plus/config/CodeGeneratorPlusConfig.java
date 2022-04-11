@@ -6,18 +6,23 @@ package com.framework.mybatis.plus.config;
 import lombok.Data;
 
 /**
- * @author xiaolong.song
+ * @author wu.sha
  * @Package com.framework.mybatis.plus;
  * @Description: mybatisPlus自定义配置文件
- * @email loye.song@foxmail.com
- * @date 2019/2/13 15:59
+ * @email wusha@meibangtech.com
  */
 @Data
 public class CodeGeneratorPlusConfig {
 
-    private String tableName;//表名
+    /**
+     * 表名
+     */
+    private String tableName;
 
-    private String moduleName;//模块名
+    /**
+     * 模块名
+     */
+    private String moduleName;
 
     private String url;
 

@@ -55,16 +55,27 @@ public class CdConfiguration {
             config.setPassword(datasource.get("password"));
             config.setUrl(datasource.get("url"));
             config.setUsername(datasource.get("username"));
-            config.setDriverClassName(datasource.get("driver-class-name"));
+            config.setDriverClassName(datasource.get("driverClassName"));
 
 
             LinkedHashMap<String,Object> cdgenerator=linkedHashMap.get(SystemConstants.CD_GENERATOR.getVal());
 
             CdGeneratorConfiguration cdGeneratorConfiguration=new CdGeneratorConfiguration();
             Object parentPackage=cdgenerator.get(SystemConstants.PARENT_PACKAGE.getVal());
+            Object controllerPackage=cdgenerator.get(SystemConstants.CONTROLLER_PACKAGE.getVal());
+            Object serverPackage=cdgenerator.get(SystemConstants.SERVER_PACKAGE.getVal());
+            Object mapperPackage=cdgenerator.get(SystemConstants.MAPPER_PACKAGE.getVal());
+            Object entityPackage=cdgenerator.get(SystemConstants.ENTITY_PACKAGE.getVal());
             if(!ObjectUtils.isEmpty(parentPackage))
                 cdGeneratorConfiguration.setParentPackage(String.valueOf(parentPackage));
-
+            if(!ObjectUtils.isEmpty(controllerPackage))
+                cdGeneratorConfiguration.setControllerPackage(String.valueOf(controllerPackage));
+            if(!ObjectUtils.isEmpty(serverPackage))
+                cdGeneratorConfiguration.setServerPackage(String.valueOf(serverPackage));
+            if(!ObjectUtils.isEmpty(mapperPackage))
+                cdGeneratorConfiguration.setMapperPackage(String.valueOf(mapperPackage));
+            if(!ObjectUtils.isEmpty(entityPackage))
+                cdGeneratorConfiguration.setEntityPackage(String.valueOf(entityPackage));
             Object author=cdgenerator.get(SystemConstants.AUTHOR.getVal());
             if(!ObjectUtils.isEmpty(author))
                 cdGeneratorConfiguration.setAuthor(String.valueOf(author));

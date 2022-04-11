@@ -8,11 +8,10 @@ import com.framework.mybatis.plus.service.CodeGenerator;
 import java.util.Map;
 
 /**
- * @author xiaolong.song
+ * @author wu.sha
  * @Package com.framework.mybatis.plus;
  * @Description:
- * @email loye.song@foxmail.com
- * @date 2019/2/13 16:17
+ * @email wusha@meibangtech.com
  */
 public class CodeGeneratorPlusMain{
 
