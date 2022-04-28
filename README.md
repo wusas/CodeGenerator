@@ -6,7 +6,6 @@
 
     <dependency>
         <groupId>com.lianli.mybatis.plus</groupId>
-        <artifactId>yisi-cdgenerator-starter</artifactId>
         <version>1.1.2.RELEASE</version>
     </dependency>
    
