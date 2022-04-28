@@ -17,19 +17,19 @@ logging:
 
 cdgenerator:
   #文件生成默认作者
-  author: wu.sha
+  author: sha
   #文件输出路径
-  output-dir: D:/yisi/lyhminiapp-api
+  output-dir: D:/
   #父级包名
-  parent-package: com.lianli.beauty.lyh
+  parent-package: com
   #controller层包名
-  controller-package: D:/yisi/lyhminiapp-api/lianli-beauty-lyh-api
+  controller-package: D:/controller
   #server层包名
-  server-package: D:/yisi/lyhminiapp-api/lianli-beauty-lyh-service
+  server-package: D:/service
   #mapper层包名
-  mapper-package: D:/yisi/lyhminiapp-api/lianli-beauty-lyh-dao
+  mapper-package: D:/dao
   #entity层包名
-  entity-package: D:/yisi/lyhminiapp-api/lianli-beauty-lyh-model
+  entity-package: D:model
   #是否略过视图
   skip-view: true
   copyright: Fih
